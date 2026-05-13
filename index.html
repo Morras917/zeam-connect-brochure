@@ -692,8 +692,8 @@ h4    { font-family:var(--g); font-size:18px; font-weight:600; line-height:1.3; 
   color:var(--od); text-decoration:none;
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width:920px){
+/* ── RESPONSIVE (screen only — print always gets desktop layout) ── */
+@media screen and (max-width:920px){
   .body-lr, .body-3col, .kpi-bar,
   .connectors-row, .regions, .segments,
   .contact-grid, .two-panel, .plan-strip,
@@ -745,7 +745,7 @@ h4    { font-family:var(--g); font-size:18px; font-weight:600; line-height:1.3; 
 }
 
 /* ── PHONE ── */
-@media (max-width:540px){
+@media screen and (max-width:540px){
   [style*="grid-template-columns:repeat(4"] {
     grid-template-columns:1fr !important;
   }
@@ -789,16 +789,32 @@ h4    { font-family:var(--g); font-size:18px; font-weight:600; line-height:1.3; 
 /* ── PRINT ── */
 @media print {
   html, body { background:var(--canvas) !important; }
+  @page { size: 1440px 810px; margin: 0; }
+  body { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
   .page {
-    min-height:0;
-    height:auto;
+    width:1440px; height:810px;
+    min-height:810px; max-height:810px;
+    overflow:hidden;
     page-break-after:always;
     break-after:page;
+    page-break-inside:avoid;
   }
   .page:last-of-type { page-break-after:auto; }
-  @page { size: landscape; margin: 0; }
-  body { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
   .dot-live, .cc-live::before { animation:none; }
+  /* Tighten last page so company card + footer fit */
+  .page:last-of-type .body { padding:36px 56px 0; }
+  .page:last-of-type h1.lg { font-size:42px; }
+  .page:last-of-type .lead { margin-top:12px !important; font-size:14px; }
+  .page:last-of-type [style*="margin-bottom:48px"] { margin-bottom:24px !important; }
+  .page:last-of-type .contact-grid { margin-bottom:0; }
+  .page:last-of-type .contact-grid > div { padding:18px 24px; }
+  .page:last-of-type .c-title { font-size:18px; margin-bottom:8px; }
+  .page:last-of-type .c-body { font-size:12px; margin-bottom:12px; }
+  .page:last-of-type .company-card { margin-top:20px; padding:20px 24px; gap:24px; }
+  .page:last-of-type .cc-label { font-size:8px; margin-bottom:6px; }
+  .page:last-of-type .cc-val { font-size:11px; line-height:1.5; }
+  .page:last-of-type .cc-block + .cc-block { margin-top:12px; }
+  .bc-footer { padding:14px 56px; }
 }
 
 </style>
